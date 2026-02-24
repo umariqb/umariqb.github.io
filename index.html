@@ -468,9 +468,7 @@
     </div>
 
 
-    <div class='container' id="about" style="scroll-margin-top: 68px;">
-        <div class='row vspace-top'>
-            <div class='col offset-sm-1'>
+    <div class='container vspace-top' id="about" style="scroll-margin-top: 68px;">
                 <p class="justified">
                     I am a Sr. Research Manager at <a href="https://www.nvidia.com/en-us/research/">NVIDIA Research</a>, 
                     leading the <a href="https://research.nvidia.com/labs/dair/">Data-Drive AI for Robotics (DAIR)</a> team. 
@@ -489,8 +487,13 @@
              <p><strong style="color: red; text-decoration: line-through;">I am hiring multiple Full-time Research Scientists to join the team. <a href="https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/Research-Scientist--Digital-Humans---New-College-Grad-2025_JR1990211">Apply here.</a> </strong></p> 
             -->
              <p><strong>We are always looking for motivated research interns. Feel free to <a href="mailto:uiqbal@nvidia.com">reach out</a> if you are interested.</strong></p>
+    </div><!-- /#about -->
+
+    <div style="height: 36px;"></div>
 
 
+
+    <div class="container">
     <div id="news" style="scroll-margin-top: 68px;"></div>
     <h4>News!</h4>
         <div class="entry">
@@ -1846,9 +1849,7 @@
                 
               
                 
-            </div>
-        </div>
-    </div>
+    </div><!-- /container (news + publications) -->
 
 
     <div id='footer' class='vspace-top'>
@@ -1868,17 +1869,23 @@
             });
         }, { threshold: 0.08, rootMargin: '0px 0px -24px 0px' });
 
-        // Apply fade-in to paper rows and year headings
+        // Apply fade-in to paper rows and year headings (skip items already in viewport)
+        function applyFadeIn(el) {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                // Already visible — mark as seen immediately, no transition
+                el.classList.add('fade-in', 'visible');
+            } else {
+                el.classList.add('fade-in');
+                revealObserver.observe(el);
+            }
+        }
         document.querySelectorAll('.col-sm-9.paper-col').forEach(el => {
             const row = el.closest('.row');
-            if (row) {
-                row.classList.add('fade-in');
-                revealObserver.observe(row);
-            }
+            if (row) applyFadeIn(row);
         });
         document.querySelectorAll('.vspace-top:has(h2)').forEach(el => {
-            el.classList.add('fade-in');
-            revealObserver.observe(el);
+            applyFadeIn(el);
         });
 
         // ── Active nav link on scroll ──────────────
