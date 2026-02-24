@@ -381,9 +381,11 @@
             }
 
             #header .row {
-                flex-direction: column;
+                flex-direction: column !important;
                 align-items: center;
                 text-align: center;
+                margin-left: 0;
+                margin-right: 0;
             }
 
             #header .col-sm-3 {
@@ -391,6 +393,11 @@
                 max-width: 110px;
                 margin: 0 auto 20px auto;
                 flex: none;
+            }
+
+            #header .col {
+                flex: none;
+                width: 100%;
             }
 
             #header-text-name { font-size: 28px; }
